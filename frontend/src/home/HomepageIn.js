@@ -14,15 +14,15 @@ import HomepageOut from "./HomepageOut";
 
 function HomepageIn ({login, register, currentUser}){
   const [test, setTest] = useState();
-  // console.log(currentUser.username)
   useEffect(() => {
   })
-
+  console.log(currentUser.applications + "applications")
     return(
         <div>
             <h1>Jobly </h1>
         <p>All the jobs in one, convenient place.</p>
-          <p>Welcome Back, {currentUser.username}!!!</p>
+          <p>Welcome Back {currentUser.username}!!!</p>
+          <p>{currentUser.applications}</p>
         </div>
     )
 }

@@ -17,7 +17,7 @@ import JoblyApi from "../api";
   function ProfileForm({currentUser, update}){
     console.log(currentUser.username)
     const history = useNavigate();
-    const initialState = {username: "", firstName: "", lastName: "", email: ""};
+    const initialState = {firstName: "", lastName: "", email: ""};
     console.log("initial state" + initialState)
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
@@ -47,7 +47,7 @@ import JoblyApi from "../api";
     return (
         <div>
             <Form onSubmit={handleSubmit}>
-                <FormGroup>
+                {/* <FormGroup>
                     <Label htmlFor="username">Username</Label>
                     <Input 
                         type="text"
@@ -56,7 +56,7 @@ import JoblyApi from "../api";
                         onChange={handleChange}
                         value={formData.username}
                     />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                     <Label htmlFor="firstName">First Name</Label>
                     <Input 

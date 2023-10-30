@@ -14,7 +14,9 @@ import jwt_decode from 'jwt-decode';
 import HomepageOut from './home/HomepageOut';
 import HomepageIn from './home/HomepageIn';
 import ProfileForm from './auth/ProfileForm';
-import Company from './companies/Company';
+import CompanyList from './companies/CompanyList';
+import CompanyDetail from './companies/CompanyDetail'
+import Jobs from './jobs/Jobs';
 import { CardImg, Card, CardImgOverlay } from 'reactstrap';
 
 export const TOKEN_STORAGE_ID = "jobly-token";
@@ -75,14 +77,18 @@ function App() {
     setToken(null);
   }
 
-  function hasApplied(id){
+  function hasAppliedToJob(id){
     return applicationIds && applicationIds.has(id)
   }
 
-  const needsToApply = (id) => {
-    if(hasApplied(id)) return;
-    JoblyApi.applyToJob(currentUser.username, id);
+  async function applyToJob(id){
+    if(hasAppliedToJob(id)) return;
+    let username = currentUser.username;
+    let apply = await JoblyApi.applyForJob(username, id);
+    console.log(apply);
     setApplicationIds(new Set([...applicationIds, id]));
+    return{success: true};
+    
   }
 
   async function update(data) {
@@ -97,11 +103,11 @@ function App() {
       return {success: false, error}
     }
   }
-
+  
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar currentUser={currentUser} />
+        <NavBar currentUser={currentUser} logout={logout} />
       
         <main className="mainbackground" >
           <Card inverse>
@@ -115,14 +121,14 @@ function App() {
           <CardImgOverlay>
             <Routes>
               //Switch has been deprecated, this is why Route replaced Switch with some syntax changes.
-             <Route path="/" element={<HomepageOut login={login} register={signUp} currentUser={currentUser} hasApplied={hasApplied} needsToApply={needsToApply}/>} />
+             <Route path="/" element={<HomepageOut login={login} register={signUp} currentUser={currentUser} hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob}/>} />
               <Route path="/login" element={<LoginForm login={login} currentUser={currentUser} />}/>
-              <Route path="/signup" element={<SignupForm register={signUp} currentUser={currentUser} />}/>
-              <Route path="/homepagein" element={<HomepageIn login={login} register={signUp} currentUser={currentUser} hasApplied={hasApplied} needsToApply={needsToApply}  />}/>
+              <Route path="/signup" element={<SignupForm register={signUp} currentUser={currentUser} login={login}/>}/>
+              <Route path="/homepagein" element={<HomepageIn login={login} register={signUp} currentUser={currentUser} hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob}  />}/>
               <Route path="/profile" element={<ProfileForm currentUser={currentUser} update={update}  />}/>
-              <Route path="/company" element={<Company login={login} register={signUp} currentUser={currentUser}  hasApplied={hasApplied} needsToApply={needsToApply} />}/>
-              <Route path="/companies/id"></Route>
-              {/* <Route path="/jobs" element={<Search title="jobstest" type="jobs" />}/> */}
+              <Route path="/companies" element={<CompanyList login={login} register={signUp} currentUser={currentUser}  hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob} />}/>
+              <Route path="/companies/:handle" element={<CompanyDetail category="company"  />}/>
+              <Route path="/jobs" element={<Jobs login={login} register={signUp} currentUser={currentUser}  hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob} category="jobs" />}/>
             </Routes>
             <p> </p>
           </CardImgOverlay>

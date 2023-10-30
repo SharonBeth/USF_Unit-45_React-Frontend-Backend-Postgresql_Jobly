@@ -15,37 +15,59 @@ import { Collapse,
   DropdownItem,
   NavbarText, Button  } from "reactstrap";
 
-function NavBar({data, currentUser}) {
+function NavBar({data, currentUser, logout}) {
     const [isOpen, setIsOpen] = useState(false);
   
     const toggle = () => setIsOpen(!isOpen);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const toggle2 = () => {
-      setIsLoggedIn(!isLoggedIn);
-      console.log(isLoggedIn + "isLoggedIn")
+  
+    console.log(isLoggedIn)
+    console.log(currentUser)
+  
+    const navIfLoggedIn = () => {
+      return(
+      <div>
+        <Navbar horizontal="end" color="secondary" >
+          <NavbarBrand href="/" >Jobly</NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen}  navbar >
+            <Nav className="me-auto" navbar >
+              <NavLink exact to="/profile"> Update Profile </NavLink>
+              <NavLink exact to="/companies" > Companies </NavLink>
+              <NavLink exact to="/jobs" > Jobs </NavLink> 
+              <NavLink exact to="/" onClick={logout}> Log Out </NavLink>         
+            </Nav>
+          </Collapse>
+          <p></p>
+        </Navbar>
+      </div>
+      )
     }
 
+    const navIfNotLoggedIn = () => {
+      return(
+      <div>
+         <Navbar horizontal="end" color="secondary" >
+          <NavbarBrand href="/" >Jobly</NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen}  navbar >
+           <Nav className="me-auto" navbar >
+             <NavLink exact to="/login" >Login</NavLink>
+             <NavLink exact to="/signup"> Sign Up </NavLink>
+           </Nav>
+           </Collapse>
+           <p></p>
+         </Navbar>
+      </div>
+      )
+    }
+    
     return (
       <div>
-      <Navbar horizontal="end" color="secondary" >
-        <NavbarBrand href="/" >Jobly</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen}  navbar >
-          <Nav className="me-auto" navbar >
-            <NavLink exact to="/login" onClick={toggle2}>Login</NavLink>
-            <NavLink exact to="/signup"> Sign Up </NavLink>
-            <NavLink exact to="/" onClick={toggle2}> Log Out </NavLink>
-            <NavLink exact to="/profile" onClick={toggle2}> Profile </NavLink>
-            <NavLink exact to="/company" > Companies </NavLink>
-          
-          </Nav>
-        </Collapse>
-        <p>{toggle2}</p>
-      </Navbar>
-    </div>
-  
-    );
+        {currentUser ? navIfLoggedIn() : navIfNotLoggedIn()}
+      </div>
+    )
   }
   
 
