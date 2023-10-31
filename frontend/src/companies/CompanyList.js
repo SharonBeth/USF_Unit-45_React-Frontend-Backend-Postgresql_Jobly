@@ -5,7 +5,7 @@ import SearchForm from "../common/SearchForm";
 import CompanyCard from "./CompanyCard";
 
 
-const CompanyList = () => {
+const CompanyList = ({hasAppliedToJob, applyToJob}) => {
     const [companies, setCompanies] = useState([]);
 
     useEffect (function getAllCompanies () {

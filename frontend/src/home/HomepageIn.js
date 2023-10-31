@@ -12,7 +12,7 @@ import { render } from "react-dom";
 import HomepageOut from "./HomepageOut";
 
 
-function HomepageIn ({login, register, currentUser}){
+function HomepageIn ({login, register, currentUser, hasAppliedToJob, applyToJob}){
   const [test, setTest] = useState();
   useEffect(() => {
   })

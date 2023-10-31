@@ -77,18 +77,14 @@ function App() {
     setToken(null);
   }
 
-  function hasAppliedToJob(id){
-    return applicationIds && applicationIds.has(id)
+  function hasAppliedToJob(id) {
+    return applicationIds.has(id);
   }
 
-  async function applyToJob(id){
-    if(hasAppliedToJob(id)) return;
-    let username = currentUser.username;
-    let apply = await JoblyApi.applyForJob(username, id);
-    console.log(apply);
+  function applyToJob(id) {
+    if (hasAppliedToJob(id)) return;
+    JoblyApi.applyForJob(currentUser.username, id);
     setApplicationIds(new Set([...applicationIds, id]));
-    return{success: true};
-    
   }
 
   async function update(data) {
@@ -127,7 +123,7 @@ function App() {
               <Route path="/homepagein" element={<HomepageIn login={login} register={signUp} currentUser={currentUser} hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob}  />}/>
               <Route path="/profile" element={<ProfileForm currentUser={currentUser} update={update}  />}/>
               <Route path="/companies" element={<CompanyList login={login} register={signUp} currentUser={currentUser}  hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob} />}/>
-              <Route path="/companies/:handle" element={<CompanyDetail category="company"  />}/>
+              <Route path="/companies/:handle" element={<CompanyDetail category="company" hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob} />}/>
               <Route path="/jobs" element={<Jobs login={login} register={signUp} currentUser={currentUser}  hasAppliedToJob={hasAppliedToJob} applyToJob={applyToJob} category="jobs" />}/>
             </Routes>
             <p> </p>

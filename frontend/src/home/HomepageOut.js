@@ -11,7 +11,7 @@ import {
 import { render } from "react-dom";
 
 
-function Homepage ({login, register, currentUser, setCurrentUser, hasApplied, needsToApply} ){
+function Homepage ({login, register, currentUser, setCurrentUser, hasAppliedToJob, applyToJob} ){
 //   const [test, setTest] = useState();
 
 //   useEffect(() => {

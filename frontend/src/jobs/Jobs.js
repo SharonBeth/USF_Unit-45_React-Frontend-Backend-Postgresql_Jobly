@@ -5,7 +5,7 @@ import SearchForm from "../common/SearchForm";
 import JobDescriptionBox from "../common/JobDescriptionBox";
 
 
-function Jobs ({category, searchterm, currentUser, hadAppliedToJob, applyToJob}){
+function Jobs ({category, searchterm, currentUser, hasAppliedToJob, applyToJob}){
     const [jobs, setJobs] = useState([]);
 
     useEffect (function getAllJobs () {
@@ -35,7 +35,7 @@ function Jobs ({category, searchterm, currentUser, hadAppliedToJob, applyToJob})
                                 salary={job.salary}
                                 equity={job.equity}
                                 currentUser={currentUser}
-                                hadAppliedToJob={hadAppliedToJob}
+                                hasAppliedToJob={hasAppliedToJob}
                                 applyToJob={applyToJob}
                                 searchterm={searchterm}
 

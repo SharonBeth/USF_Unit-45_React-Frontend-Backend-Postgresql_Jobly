@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function JobDescriptionBox ({currentUser, hasAppliedToJob, applyToJob, category, searchterm, id, title, salary, equity}){
     const [applied, setApplied] = useState();
-    const userAppliedJobs = currentUser.applications;
+
 
     useEffect(() => {
         setApplied(hasAppliedToJob(id));
@@ -35,7 +35,7 @@ function JobDescriptionBox ({currentUser, hasAppliedToJob, applyToJob, category,
                 </Col>
                 <Col sm="2">
                     <Card className="text-end my-2">
-                        <Button  disable={applied}>{applied || userAppliedJobs.includes(id) ? "Applied!" : "Apply Now!"}</Button>
+                        <Button  onClick={handleApply} disable={applied}>{applied ? "Applied" : "Apply"}</Button>
                     </Card>
                 </Col> 
             </Row>
